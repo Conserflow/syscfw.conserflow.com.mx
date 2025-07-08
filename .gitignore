@@ -1,10 +1,7 @@
-vendor/
-node_modules/
-.vscode/launch.json
-resources/assets/js/app.js
-ngrok
-public/docs/SGI/*
-public/temp/
+/vendor
+/node_modules
+/storage/*.key
+/public/storage
 
 # Directorios de caché
 storage/framework/cache/
