@@ -1,0 +1,19 @@
+vendor/
+node_modules/
+.vscode/launch.json
+resources/assets/js/app.js
+ngrok
+public/docs/SGI/*
+public/temp/
+
+# Directorios de caché
+storage/framework/cache/
+storage/framework/sessions/
+storage/framework/views/
+storage/logs/
+
+# Otros
+.DS_Store
+Thumbs.db
+*.swp
+
