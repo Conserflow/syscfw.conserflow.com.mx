@@ -268,6 +268,7 @@ class ProveedoresController extends Controller
       {
         /** Guardar historial de cambios **/
         $cambios = $this->ObtenerCambios($proveedor->id);
+        
         if ($cambios["status"]) // Ok
         {
           // Guardar en el historial
@@ -310,27 +311,35 @@ class ProveedoresController extends Controller
       // Obtener ultimo banco registrado
       /*$banco = (array) DB::table("bancos_proveedores")->where("proveedor_id", $id)
         ->orderBy("id", "desc")->first();*/
+       $bancos = DB::table("bancos_proveedores")->where("proveedor_id", $id)
+            ->orderBy("id", "desc")
+            ->take(2)
+            ->get();
+           
+        $bancoVacio = [
+                "banco_id" => 0,
+                "banco" => "N/D",
+                "cuenta" => "N/D",
+                "clabe" => "N/D",
+                "proveedor_id" => $id,
+                "condiciones" => "N/D",
+                "moneda" => "N/D"
+            ];
 
-        $bancos = DB::table("bancos_proveedores")
-      ->where("proveedor_id", $id)
-      ->orderBy("id", "desc")
-      ->take(2)
-      ->get();
+        
+      $banco1 = (array)($bancos->get(0) ?? (object) $bancoVacio);
+      $banco2 = (array)($bancos->get(1) ?? (object) $bancoVacio);
       
-     
-      if ($banco == []) // Sin bancos registrados
-      {
-        $banco = [
-          "banco_id" => 0,
-          "banco" => "N/D",
-          "cuenta" => "N/D",
-          "clabe" => "N/D",
-          "proveedor_id" => $id,
-          "condiciones" => "N/D",
-          "moneda" => "N/D"
-        ];
+      $campos = ['banco_id','banco', 'cuenta', 'clabe','proveedor_id', 'condiciones', 'moneda'];
+      
+      $bancoFinal = array_intersect_key($banco1, array_flip($campos));
+      
+      foreach ($campos as $campo) {
+        $bancoFinal[$campo . '2'] = $banco2[$campo] ?? 'N/D';
       }
-      $data = array_merge($proveedor, $banco);
+     
+      
+      $data = array_merge($proveedor, $bancoFinal);
       $json = json_encode($data);
 
       return ["status" => true, "data" => $json];

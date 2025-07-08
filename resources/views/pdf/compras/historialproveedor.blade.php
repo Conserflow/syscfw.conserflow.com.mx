@@ -225,11 +225,11 @@
             @if($formatoNR02)
             <tr>
                 <td class="bg-gray" width="15%">Banco</td>
-                <td width="26%">{{$campos->banco}}</td>
+                <td width="26%">{{$campos->banco2 ?? '---'}}</td>
                 <td class="bg-gray" width="15%">Cuenta Clabe</td>
-                <td>{{$campos->cuenta}}</td>
+                <td>{{$campos->cuenta2 ?? '---'}}</td>
                 <td class="bg-gray" width="10%">Tipo de moneda</td>
-                <td>{{$campos->moneda}}</td>
+                <td>{{$campos->moneda2 ?? '---'}}</td>
             </tr> 
             <tr>
                 <td class="bg-gray" width="15%">Crédito</td>
