@@ -322,8 +322,18 @@
 
                         <div class="form-group row">
                             <label class="col-md-2 form-control-label">Modificación</label>
-                            <div class="col-md-9">
+                            <div class="col-md-9 ml-4">
+                                <!--
                                 <textarea rows="3" maxlength="300" v-model="proveedor.modificacion" class="form-control"></textarea>
+                                -->
+                                <div v-for="(item, index) in list_modificaciones" :key="index" class="form-check">
+                                    <input class="form-check-input" type="checkbox"
+                                    :id="'mod-' + index"
+                                    :value="item"
+                                    v-model="list_modificaciones_db"
+                                    />
+                                    <label class="form-check-label" :for="'mod-' + index">{{ item }}</label>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -494,6 +504,12 @@
 </main>
 </template>
 
+<style>
+.form-check-label {
+    padding-left: 0.1rem;
+}
+</style>
+
 <script>
 import Utilerias from '../../Herramientas/utilerias.js';
 var config = require('../../Herramientas/config-vuetables-client').call(this);
@@ -588,6 +604,8 @@ export default
             isObtenerHistorial_loading: false,
             /* Listas de opciones */
             list_giro_suministro: [],
+            list_modificaciones: [],
+            list_modificaciones_db:[],
         }
     },
     computed:
@@ -774,6 +792,7 @@ export default
             this.temp_proveedor_moneda = "MXN";
             this.temp_proveedor_banco = 'N/D';
             this.list_giro_suministro = [];
+            this.list_modificaciones = [];
         },
 
         /**
@@ -790,6 +809,7 @@ export default
                 this.tituloModal = 'Registrar Nuevo proveedor';
                 this.tipoAccion = 1;
                 this.CargarSuministrosGiros("", true);
+                this.CargarModificaciones("",true);
             }
             else
             {
@@ -804,6 +824,7 @@ export default
                 };
                 this.ValidarRFC();
                 this.CargarSuministrosGiros(data.giro, false);
+                this.CargarModificaciones("",false)
             }
 
             
@@ -1045,6 +1066,13 @@ export default
 
             this.list_giro_suministro = suministros.sort();
           
+        },
+        CargarModificaciones(smodificaciones, nuevo = false){
+
+            let motivoModificaciones = ["Cambio de domicilio","Cambio datos bancarios"
+            ,"Cambio de datos de contacto de ventas","Cambio de datos de contacto de facturación"]
+
+            this.list_modificaciones = motivoModificaciones
         }
 
     },
