@@ -336,6 +336,18 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-2 form-control-label">Documentos</label>
+                            <div class="col-md-9 ml-4">
+                                <div v-for="(item, index) in list_tipos_documentos" :key="index" class="form-check">
+                                    <input class="form-check-input" type="checkbox" :id="'doc-' + index"
+                                        :value="item" v-model="list_tipos_documentos_db" />
+                                    <label class="form-check-label" :for="'doc-' + index">{{ item }}</label>
+                                </div>
+                            </div>
+                        </div>                        
+
                         <div class="form-group row">
                             <label class="col-md-2 form-control-label">Anexos</label>
                             <div class="col-md-9">
@@ -606,6 +618,8 @@ export default
             list_giro_suministro: [],
             list_modificaciones: [],
             list_modificaciones_db:[],
+            list_tipos_documentos: [],
+            list_tipos_documentos_db: [],
         }
     },
     computed:
@@ -644,6 +658,9 @@ export default
             }
             let data = new FormData();
             this.isLoading = true;
+
+            //this.proveedor.modificacion = this.list_modificaciones_db.join(',')
+            //this.proveedor.tiposdocumentos = this.list_tipos_documentos_db.join(',')
 
             if (!nuevo)
                 data.append("id", this.proveedor.id);
@@ -780,6 +797,7 @@ export default
                 facturacion_celular: "-",
                 modificacion: "-",
                 anexos: "-",
+                tiposdocumentos:"",
             };
             this.temp2_proveedor_cuenta = '000000';
             this.temp2_proveedor_clabe = '000000';
@@ -793,6 +811,7 @@ export default
             this.temp_proveedor_banco = 'N/D';
             this.list_giro_suministro = [];
             this.list_modificaciones = [];
+            this.list_tipos_documentos= [];
         },
 
         /**
@@ -810,6 +829,7 @@ export default
                 this.tipoAccion = 1;
                 this.CargarSuministrosGiros("", true);
                 this.CargarModificaciones("",true);
+                this.CargarTipoDocumento("", true);
             }
             else
             {
@@ -824,7 +844,8 @@ export default
                 };
                 this.ValidarRFC();
                 this.CargarSuministrosGiros(data.giro, false);
-                this.CargarModificaciones("",false)
+                this.CargarModificaciones(this.proveedor.modificacion,false);
+                this.CargarTipoDocumento("", false)
             }
 
             
@@ -1072,9 +1093,25 @@ export default
             let motivoModificaciones = ["Cambio de domicilio","Cambio datos bancarios"
             ,"Cambio de datos de contacto de ventas","Cambio de datos de contacto de facturación"]
 
-            this.list_modificaciones = motivoModificaciones
-        }
+            if (!nuevo) {
 
+                this.list_modificaciones_db = smodificaciones ? smodificaciones.split(',') : []
+            }
+
+            this.list_modificaciones = motivoModificaciones
+        },
+        CargarTipoDocumento(sdocumentos, nuevo = false) {
+
+            let tiposDocumentos = ["Cambio de datos de contacto de ventas", "Caratula bancaría"
+                , "Aplicables conforme a los criterios adicionales (PCO-02/F-05)"]
+
+            if (!nuevo) {
+                this.list_tipos_documentos_db = sdocumentos ? sdocumentos.split(',') : []
+            }
+
+            this.list_tipos_documentos = tiposDocumentos
+
+        },
     },
     mounted()
     {
