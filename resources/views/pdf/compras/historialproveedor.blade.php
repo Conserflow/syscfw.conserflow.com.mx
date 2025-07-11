@@ -333,15 +333,15 @@
                 </tr>
                 <tr>
                     <td width="30%" class="bg-gray">Cambio de domicilio</td>
-                    <td width="20%"></td>
+                    <td width="20%">{{ $modificaciones_pdf[1]['marcado'] ? 'X' : '' }}</td>
                     <td width="30%" class="bg-gray">Cambio datos bancarios</td>
-                    <td width="20%"></td>
+                    <td width="20%">{{ $modificaciones_pdf[2]['marcado'] ? 'X' : '' }}</td>
                 </tr>
                  <tr>
                     <td width="30%" class="bg-gray">Cambio de datos de contacto de ventas</td>
-                    <td width="20%"></td>
+                    <td width="20%">{{ $modificaciones_pdf[3]['marcado'] ? 'X' : '' }}</td>
                     <td width="30%" class="bg-gray">Cambio de datos de contacto de facturación</td>
-                    <td width="20%"></td>
+                    <td width="20%">{{ $modificaciones_pdf[4]['marcado'] ? 'X' : '' }}</td>
                 </tr>               
             </table>
             <div style="height: 5px;"></div>
@@ -352,16 +352,16 @@
                 </tr>
                 <tr>
                     <td width="35%" class="bg-gray">Cambio de datos de contacto de ventas</td>
-                    <td width="15%"></td>
+                    <td width="15%">{{ $tipos_documentos_pdf[1]['marcado'] ? 'Si' : '' }}</td>
                     <td width="50%" rowspan="2"></td>
                 </tr>
                 <tr>
                     <td width="35%" class="bg-gray">Caratula bancaría</td>
-                    <td width="15%"></td>
+                    <td width="15%">{{ $tipos_documentos_pdf[2]['marcado'] ? 'Si' : '' }}</td>
                 </tr>
                 <tr>
                     <td width="35%" class="bg-gray">Aplicables conforme a los criterios adicionales (PCO-02/F-05)</td>
-                    <td width="15%"></td>
+                    <td width="15%">{{ $tipos_documentos_pdf[3]['marcado'] ? 'Si' : '' }}</td>
                     <td width="50%" class="bg-gray"> Nombre</td>
                 </tr>
             </table>

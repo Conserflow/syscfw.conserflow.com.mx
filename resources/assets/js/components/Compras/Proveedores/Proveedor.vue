@@ -659,8 +659,8 @@ export default
             let data = new FormData();
             this.isLoading = true;
 
-            //this.proveedor.modificacion = this.list_modificaciones_db.join(',')
-            //this.proveedor.tiposdocumentos = this.list_tipos_documentos_db.join(',')
+            this.proveedor.tipos_modificacion = this.list_modificaciones_db.join(',');
+            this.proveedor.tipos_documentos = this.list_tipos_documentos_db.join(',');
 
             if (!nuevo)
                 data.append("id", this.proveedor.id);
@@ -694,6 +694,8 @@ export default
             data.append("facturacion_correo", this.proveedor.facturacion_correo);
             data.append("modificacion", this.proveedor.modificacion);
             data.append("anexos", this.proveedor.anexos);
+            data.append("tipos_modificacion", this.proveedor.tipos_modificacion);
+            data.append("tipos_documentos", this.proveedor.tipos_documentos);
             // Banco inicial
             data.append("temp2_proveedor_cuenta", this.temp2_proveedor_cuenta);
             data.append("temp2_proveedor_clabe", this.temp2_proveedor_clabe);
@@ -798,6 +800,8 @@ export default
                 modificacion: "-",
                 anexos: "-",
                 tiposdocumentos:"",
+                tipos_modificacion:"",
+                tipos_documentos: "",
             };
             this.temp2_proveedor_cuenta = '000000';
             this.temp2_proveedor_clabe = '000000';
@@ -827,6 +831,8 @@ export default
                 this.ListBancos = [];
                 this.tituloModal = 'Registrar Nuevo proveedor';
                 this.tipoAccion = 1;
+                this.list_modificaciones_db = [];
+                this.list_tipos_documentos_db = [];
                 this.CargarSuministrosGiros("", true);
                 this.CargarModificaciones("",true);
                 this.CargarTipoDocumento("", true);
@@ -844,8 +850,8 @@ export default
                 };
                 this.ValidarRFC();
                 this.CargarSuministrosGiros(data.giro, false);
-                this.CargarModificaciones(this.proveedor.modificacion,false);
-                this.CargarTipoDocumento("", false)
+                this.CargarModificaciones(this.proveedor.tipos_modificacion,false);
+                this.CargarTipoDocumento(this.proveedor.tipos_documentos, false);
             }
 
             

@@ -19,7 +19,8 @@ class Proveedor extends Model
         "ventas_contacto", "ventas_telefono", "ventas_celular", "ventas_correo",
         "facturacion_contacto", "facturacion_telefono", "facturacion_celular",
         "facturacion_correo",
-        "taxid"
+        "taxid",
+        "tipos_modificacion","tipos_documentos"
     ];
     protected $table = "proveedores";
     public $timestamps = true;

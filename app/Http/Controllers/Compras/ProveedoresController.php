@@ -60,7 +60,9 @@ class ProveedoresController extends Controller
           "p.facturacion_correo",
           "p.condicion",
           "p.regimen_fiscal",
-          "p.limite_credito"
+          "p.limite_credito",
+          'p.tipos_modificacion',
+          'p.tipos_documentos',
         )
         ->orderBy("p.nombre")
         ->distinct()

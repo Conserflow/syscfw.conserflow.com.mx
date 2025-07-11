@@ -53,9 +53,46 @@ class CambiosProveedoresController extends Controller
 
             // Crear objeto
             $campos = json_decode($cambio["campos_cambios"]);
+
+            $modificaciones_pdf = [];
+            $tipos_documentos_pdf= [];
+
+            if ($formatoNR02)
+            {
+                $list_modificaciones = [
+                    ['id'=>1, 'valor'=> "Cambio de domicilio"],
+                    ['id'=>2, 'valor'=> "Cambio datos bancarios"],
+                    ['id'=>3, 'valor'=> "Cambio de datos de contacto de ventas"],
+                    ['id'=>4, 'valor'=> "Cambio de datos de contacto de facturación"]
+                ];
+                
+                $list_tipos_documentos = [
+                    ['id' =>1, 'valor'=> "Cambio de datos de contacto de ventas"], 
+                    ['id' =>2, 'valor'=> "Caratula bancaría"], 
+                    ['id' =>3, 'valor'=> "Aplicables conforme a los criterios adicionales (PCO-02/F-05)"]
+                ];
+                
+                $list_modificaciones_db = array_map('trim', explode(',', $campos->tipos_modificacion ?? ''));
+                $list_tipos_documentos_db = array_map('trim', explode(',', $campos->tipos_documentos ?? ''));
+
+                foreach ($list_modificaciones as $mod) {
+                    $modificaciones_pdf[$mod['id']] = [
+                        'valor' => $mod['valor'],
+                        'marcado' => in_array($mod['valor'], $list_modificaciones_db)
+                    ];
+                }                
+                
+                foreach ($list_tipos_documentos as $doc) {
+                    $tipos_documentos_pdf[$doc['id']] =[
+                        'valor' => $doc['valor'],
+                        'marcado' => in_array($doc['valor'], $list_tipos_documentos_db)
+                    ];
+                }
+            }
+
             $pdf = Facade::loadView(
                 "pdf.compras.historialproveedor",
-                compact("cambio", "campos", "revision", "emision","formatoNR02")
+                compact("cambio", "campos", "revision", "emision","formatoNR02","modificaciones_pdf","tipos_documentos_pdf")
             );
             $pdf->setPaper("letter", "portrait");
             $pdf->getDomPDF()->set_option("enable_php", true);
